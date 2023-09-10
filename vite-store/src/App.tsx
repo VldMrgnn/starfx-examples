@@ -2,13 +2,25 @@ import { useDispatch, useSelector } from "starfx/react";
 
 import "./App.css";
 import { AppState, fetchUsers, db } from "./api.ts";
+import { setWinUser } from "./api.ts";
+import { setWinUser2 } from "./thunks/app.ts";
 
 function App({ id }: { id: string }) {
   const dispatch = useDispatch();
-  const user = useSelector((s: AppState) => db.users.selectById(s, { id }));
-  const userList = useSelector(db.users.selectTableAsList);
+  const user = useSelector((s: AppState) => db.users.selectById(s, { id })) 
+  const userList = useSelector(db.users.selectTableAsList) as any[];
   return (
     <div>
+      <div>
+        <button onClick={() => dispatch(setWinUser("A"))}>
+          <code>A</code>
+        </button>
+      </div>
+      <div>
+        <button onClick={() => dispatch(setWinUser2("B"))}>
+          <code>B</code>
+        </button>
+      </div>
       <div>hi there, {user.name}</div>
       <button onClick={() => dispatch(fetchUsers())}>Fetch users</button>
       {userList.map((u) => {

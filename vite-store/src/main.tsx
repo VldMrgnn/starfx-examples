@@ -5,7 +5,7 @@ import { parallel } from "starfx";
 import { configureStore, take } from "starfx/store";
 import { Provider } from 'starfx/react';
 
-import { api, schema } from "./api.ts";
+import { api, schema, thunks } from "./api.ts";
 import App from "./App.tsx";
 import "./index.css";
 
@@ -32,6 +32,7 @@ async function init() {
         }
       },
       api.bootup,
+      thunks.bootup 
     ]);
     yield* group;
   });
