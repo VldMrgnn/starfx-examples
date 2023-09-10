@@ -1,3 +1,9 @@
+import { takeEvery } from "starfx/store";
+import { updateStore } from "starfx/store";
+import { db, thunks } from "../api";
+
+import { Next } from "starfx";
+import { ThunkCtx } from "../types";
 
 export type TApp = {
 	winUser: string;
@@ -28,7 +34,10 @@ export const appRepo = {
 
 
 // if this is exprorted from here it will crash the app: Uncaught (in promise) ReferenceError: Cannot access 'thunks' before initialization
-// export const setWinUser2 = thunks.create<string>(
+
+// for the error reproduction, uncomment this thunk:
+
+// export const setWinUser3 = thunks.create<string>(
 // 	"thunks/setWinUser2",
 // 	{supervisor: takeEvery},
 // 	function* (_ctx:ThunkCtx, next:Next) {
