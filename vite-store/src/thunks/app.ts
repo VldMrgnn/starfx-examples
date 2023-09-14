@@ -45,9 +45,9 @@ export const setWinUser2 = thunks.create<string>(
 		console.log('PASSES THE FX RUNED')
 
 		/* 
-		the following doesn't pass.
-		it doesn't error visibly,
-		it locks the thunk for future use.
+		- the following doesn't pass through.
+		- it doesn't error visibly,
+		- it locks the thunk for future use.
 		*/
 		yield* run(() => runed());
 		console.log(`PASSES THE RUNED`)
@@ -57,7 +57,9 @@ export const setWinUser2 = thunks.create<string>(
 );
 
 /* 
+It seems that run is a "no-go" for thunks.
 
-if for some reason we intend to "run" function from the thunk we have to fx. call it. 
-Basically if you "run"  you lose context 'store'. that's ok. but it swallows errors.
+If for some reason we intend to "run" function from the thunk we have to "fx" call it, which means that we reference the store.
+
+Basically if you "run"  you lose context 'store'. And it swallows errors.
 */
