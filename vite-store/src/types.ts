@@ -9,3 +9,10 @@ export interface ThunkCtx<P = any, D = any> extends PipeCtx<P>, LoaderCtx<P> {
 }
 
 export type { Next } from "starfx";
+
+
+declare global {
+	interface Window {
+	  fx: any
+	}
+  }

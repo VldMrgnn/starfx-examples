@@ -33,7 +33,7 @@ export const appRepo = {
 };
 
 
-// if this is exprorted from here it will crash the app: Uncaught (in promise) ReferenceError: Cannot access 'thunks' before initialization
+// if this is exported from here it will crash the app: Uncaught (in promise) ReferenceError: Cannot access 'thunks' before initialization
 
 // for the error reproduction, uncomment this thunk:
 
