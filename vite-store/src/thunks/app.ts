@@ -1,10 +1,9 @@
-import { call, run } from "starfx";
-import { createSelector, takeEvery, select } from "starfx/store";
-import { updateStore } from "starfx/store";
-import { db, thunks } from "../api";
+import { call, Next, run } from 'starfx';
+// import {useScope} from "starfx";
+import { createSelector, select, takeEvery, updateStore } from 'starfx/store';
 
-import { Next } from "starfx";
-import { ThunkCtx } from "../types";
+import { db, thunks } from '../api';
+import { ThunkCtx } from '../types';
 
 const called = function* () {
 	const ndata = yield* select(db.app.select);
@@ -25,11 +24,12 @@ export const setWinUser2 = thunks.create<string>(
 	"thunks/setWinUser2",
 	{ supervisor: takeEvery },
 	function* (ctx: ThunkCtx, next: Next) {
-		yield* updateStore(db.app.patch({ key: 'winUser', value: ctx.payload }));
+		yield* updateStore(db.app.update({ key: 'winUser', value: ctx.payload }));
 
 		const data = yield* select(db.app.select);
 
 		console.log('we set the user:', data.winUser);
+		// const scope = useScope();
 		const nested = function* () {
 			const ndata = yield* select(db.app.select);
 			console.log('we set the user in nested function:', ndata.winUser);

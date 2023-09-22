@@ -1,9 +1,10 @@
-import { useDispatch, useSelector } from "starfx/react";
+import './App.css';
 
-import "./App.css";
-import { AppState, fetchUsers, db } from "./api.ts";
-import { setWinUser } from "./api.ts";
-import { currentUser, setWinUser2 } from "./thunks/app.ts";
+import { useDispatch, useSelector } from 'starfx/react';
+// import { updateStore } from 'starfx/store';
+
+import { AppState, db, fetchUsers, setWinUser } from './api.ts';
+import { currentUser, setWinUser2 } from './thunks/app.ts';
 
 function App({ id }: { id: string }) {
   const dispatch = useDispatch();
@@ -18,7 +19,13 @@ function App({ id }: { id: string }) {
         </button>
       </div>
       <div>
-        <button onClick={() => dispatch(setWinUser2("B"))}>
+        <button onClick={() =>{
+          // ths ok:
+           dispatch(setWinUser2("B"))
+          // but this is not:
+          // cannot dispatch to store directly
+          // window.fx.dispatch(db.app.update({ key: 'winUser', value: 'B' }))
+          }}>
           <code>B</code>
         </button>
       </div>

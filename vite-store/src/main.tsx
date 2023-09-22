@@ -1,13 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import './index.css';
 
-import { parallel } from "starfx";
-import { configureStore, take } from "starfx/store";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { parallel } from 'starfx';
 import { Provider } from 'starfx/react';
+import { configureStore, take } from 'starfx/store';
 
-import { api, schema, thunks } from "./api.ts";
-import App from "./App.tsx";
-import "./index.css";
+import { api, schema, thunks } from './api.ts';
+import App from './App.tsx';
+import { setupDevTool, subscribeToActions } from './devtools.ts';
 
 init().then(console.log).catch(console.error);
 
@@ -21,14 +22,15 @@ async function init() {
       },
     ],
   });
-  (window as any).fx = store;
+  const fx = (window as any).fx = store;
 
   store.run(function* (): any {
+    setupDevTool(store, {name: "App"});
     const group = yield* parallel([
       function* logger() {
         while (true) {
           const action = yield* take("*");
-          console.log("action", action);
+          subscribeToActions(fx, {action})
         }
       },
       api.bootup,

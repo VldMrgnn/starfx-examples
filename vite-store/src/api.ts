@@ -1,13 +1,8 @@
-import {
-  createPipe,
-  errorHandler,
-} from "starfx";
-import { createApi, fetcher, requestMonitor } from "starfx";
-import { takeEvery, storeMdw} from 'starfx/store';
-import { createSchema } from 'starfx/store';
-import { slice } from 'starfx/store';
+import { createApi, createPipe, errorHandler, fetcher, requestMonitor } from 'starfx';
+import { createSchema, slice, storeMdw, takeEvery, updateStore } from 'starfx/store';
+
 import { appRepo } from './slices/app';
-import { updateStore } from 'starfx/store';
+
 import type { Next } from 'starfx';
 import type { ThunkCtx } from './types';
 
@@ -60,7 +55,7 @@ export const setWinUser = thunks.create<string>(
 	function* (ctx:ThunkCtx, next:Next) {
 		// note: if we define the schema as follows:
 		// [appRepo.name]: slice.obj(appRepo.initialState) we get ts error below: Property 'patch' does not exist on type 'TableOutput .....
-		yield* updateStore(db.app.patch({key: 'winUser', value: ctx.payload}));
+		yield* updateStore(db.app.update({key: 'winUser', value: ctx.payload}));
 		yield* next(); 
 	}
 )
